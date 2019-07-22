@@ -4,6 +4,9 @@ from sklearn.ensemble import ExtraTreesRegressor
 from sklearn.metrics import mean_squared_error, r2_score, mean_absolute_error
 from sklearn.model_selection import train_test_split
 import pickle
+import matplotlib.pyplot as plt
+import pandas as pd
+
 
 x, y = datahelper.get_xy('data/', num_hours=3, error_minutes=15)
 
@@ -26,29 +29,33 @@ index, score = sorted_by_scores[0]
 extra_trees.set_params(n_estimators=estimators[index])
 extra_trees.fit(x_train, y_train)
 
+feat_importances = pd.Series(extra_trees.feature_importances_, index=x_train.columns)
+feat_importances.nlargest(10).plot(kind='barh')
+plt.show()
+
 filename = '../models/extra_trees_model.sav'
 print('Saving model with ', estimators[index], ' estimators to file ', filename)
 with open(filename, 'wb') as h:
     pickle.dump(extra_trees, h)
 
 
-# for i in range(0, 5):
-#     index, score = sorted_by_scores[i]
-#     print("Number of estimators = ", estimators[index])
-#
-#     extra_trees.set_params(n_estimators=estimators[index])
-#     extra_trees.fit(x_train, y_train)
-#     y_predicted = extra_trees.predict(x_test)
-#
-#     print('R^2 = ' + str(r2_score(y_test, y_predicted)))
-#     print('MSE = ' + str(np.sqrt(mean_squared_error(y_test, y_predicted))))
-#     print()
-#
-#     m = mean_absolute_error(y_test, y_predicted, multioutput='raw_values')
-#     print('Average mean absolute error: ', np.average(m))
-#     print("Mean absolute error for measurements:")
-#     for col, err in zip(list(x_test.columns.values), m):
-#         print(col, ": ", err)
-#     print()
+for i in range(0, 5):
+    index, score = sorted_by_scores[i]
+    print("Number of estimators = ", estimators[index])
+
+    extra_trees.set_params(n_estimators=estimators[index])
+    extra_trees.fit(x_train, y_train)
+    y_predicted = extra_trees.predict(x_test)
+
+    print('R^2 = ' + str(r2_score(y_test, y_predicted)))
+    print('MSE = ' + str(np.sqrt(mean_squared_error(y_test, y_predicted))))
+    print()
+
+    m = mean_absolute_error(y_test, y_predicted, multioutput='raw_values')
+    print('Average mean absolute error: ', np.average(m))
+    print("Mean absolute error for measurements:")
+    for col, err in zip(list(x_test.columns.values), m):
+        print(col, ": ", err)
+    print()
 
 

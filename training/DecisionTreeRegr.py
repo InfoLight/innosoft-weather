@@ -2,7 +2,7 @@
 Decision Tree regression model
 author: Alsu Vakhitova
 """
-import datahelper
+import training.datahelper as datahelper
 import numpy as np
 from sklearn.tree import DecisionTreeRegressor
 from sklearn.metrics import mean_squared_error, r2_score, mean_absolute_error

@@ -34,15 +34,15 @@ print('Saving model to file ', filename)
 with open(filename, 'wb') as h:
     pickle.dump(NN_model, h)
 
-# y_pred = NN_model.predict(x_test)
-#
-#
-# print('R^2 = ' + str(r2_score(y_test, y_pred)))
-# print('MSE = ' + str(np.sqrt(mean_squared_error(y_test, y_pred))))
-# print()
-#
-# m = mean_absolute_error(y_test, y_pred, multioutput='raw_values')
-# print('Average mean absolute error: ', np.average(m))
-# print("Mean absolute error for measurements:")
-# for col, err in zip(list(y.columns.values), m):
-#     print(col, ": ", err)
+y_pred = NN_model.predict(x_test)
+
+
+print('R^2 = ' + str(r2_score(y_test, y_pred)))
+print('MSE = ' + str(np.sqrt(mean_squared_error(y_test, y_pred))))
+print()
+
+m = mean_absolute_error(y_test, y_pred, multioutput='raw_values')
+print('Average mean absolute error: ', np.average(m))
+print("Mean absolute error for measurements:")
+for col, err in zip(list(y.columns.values), m):
+    print(col, ": ", err)
