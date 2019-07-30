@@ -54,7 +54,7 @@ for i in range(0, 5):
     m = mean_absolute_error(y_test, y_predicted, multioutput='raw_values')
     print('Average mean absolute error: ', np.average(m))
     print("Mean absolute error for measurements:")
-    for col, err in zip(list(x_test.columns.values), m):
+    for col, err in zip(list(y_test.columns.values), m):
         print(col, ": ", err)
     print()
 

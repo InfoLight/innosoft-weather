@@ -81,7 +81,7 @@ def get_xy(path, num_hours, error_minutes):
             x = x.append(df.iloc[[i]])
             closest_time = min(b['time'].tolist(), key=lambda d: abs(d - time))
             y = y.append(b[b['time'] == closest_time].iloc[0])
-    cols = x.columns.tolist()
-    # cols = ['road_temperature', 'air_temperature', 'snow_intensity', 'rain_intensity']
+    # cols = x.columns.tolist()
+    cols = ['road_temperature', 'air_temperature', 'snow_intensity', 'rain_intensity']
     y = y[cols]
     return x.loc[:, x.columns != 'time'].reset_index(drop=True), y.loc[:, y.columns != 'time'].reset_index(drop=True)
